@@ -22,7 +22,7 @@
               @click="schema2jsdoc"
               size="small"
               type="primary"
-            >生成</el-button>
+            >GO</el-button>
           </div>
         </el-col>
         <el-col :span="12">
