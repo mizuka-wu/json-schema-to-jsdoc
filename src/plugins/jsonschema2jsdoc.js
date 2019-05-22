@@ -61,11 +61,11 @@ function processProperties(schema, nested, options = {}) {
         if (items.type === 'object') {
           text += writeParam(
             'Object[]',
-            prefix + property + '[]',
+            prefix + property,
             props[property].description,
             !required.includes(property)
           )
-          text += processProperties(items, prefix + property)
+          text += processProperties(items, prefix + property + '[]')
         } else {
           /**
            * 非object

@@ -44,7 +44,7 @@ export default {
     return {
       rows: 20,
       schema: {
-        body: "",
+        body: localStorage.getItem("schema-body") || "",
         name: ""
       },
       jsdoc: "",
@@ -79,6 +79,7 @@ export default {
         if (text && !text.includes("id")) {
           this.error = "schema没有id字段，请手动补全jsdoc";
         }
+        localStorage.setItem("schema-body", text);
       }, 300)
     }
   }
