@@ -1,5 +1,5 @@
 {
-  "name": "json-schema-2-jsdoc",
+  "name": "@mizuka/json-schema-2-jsdoc",
   "version": "1.0.0",
   "repository": {
     "type": "git",
