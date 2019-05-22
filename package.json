@@ -5,6 +5,7 @@
     "type": "git",
     "url": "git@github.com:mizuka-wu/json-schema-to-jsdoc.git"
   },
+  "main": "src/plugins/jsonschema2jsdoc.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

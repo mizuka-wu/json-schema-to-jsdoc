@@ -28,6 +28,6 @@ deploy:
     file: "FILE TO UPLOAD"
     skip_cleanup: true
     file_glob: true
-    file: plugins/jsonschema2jsdoc.js
+    file: src/plugins/jsonschema2jsdoc.js
     on:
       tags: true
