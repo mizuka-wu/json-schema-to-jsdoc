@@ -61,7 +61,7 @@ function processProperties(schema, nested, options = {}) {
         if (items.type === 'object') {
           text += writeParam(
             'Object[]',
-            prefix + property,
+            prefix + property + '[]',
             props[property].description,
             !required.includes(property)
           )
@@ -93,8 +93,9 @@ function processProperties(schema, nested, options = {}) {
 }
 
 function writeDescription(schema, suffix = 'object') {
-  let text = schema.description || `Represents a ${schema.id} ${suffix}`
-  text += `\n  * @name ${upperFirst(schema.id)}`
+  let name = schema.id || schema.description
+  let text = schema.description || `Represents a ${name} ${suffix}`
+  text += `\n  * @name ${upperFirst(name)}`
   return `  * ${text}\n  *\n`
 }
 
