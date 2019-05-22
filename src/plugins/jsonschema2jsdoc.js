@@ -1,11 +1,18 @@
+/* eslint-disable no-console */
 import json from 'json-pointer'
 
+/**
+ *
+ * @param {Object} schema
+ * @param {{ignore: string[]}} options
+ */
 export default function generate(schema, options = {}) {
   let jsdoc = ''
 
   if (!schema || Object.keys(schema).length === 0) {
     return jsdoc
   }
+
   jsdoc += '/**\n'
   jsdoc += writeDescription(schema)
 
@@ -13,13 +20,19 @@ export default function generate(schema, options = {}) {
     return jsdoc
   }
 
-  jsdoc += processProperties(schema, false, options)
+  jsdoc += processProperties(schema, '', options)
 
   jsdoc += '  */\n'
 
   return jsdoc
 }
 
+/**
+ * 生成
+ * @param {*} schema
+ * @param {*} nested
+ * @param {*} options
+ */
 function processProperties(schema, nested, options = {}) {
   const props = json.get(schema, '/properties')
   const required = json.has(schema, '/required')
@@ -28,21 +41,44 @@ function processProperties(schema, nested, options = {}) {
 
   let text = ''
   for (let property in props) {
+    let optional = !required.includes(property)
     if (Array.isArray(options.ignore) && options.ignore.includes(property)) {
       continue
     } else {
-      let prefix = nested ? '.' : ''
+      let prefix = nested ? `${nested}.` : ''
 
       if (props[property].type === 'object' && props[property].properties) {
         text += writeParam(
-          'object',
+          'Object',
           prefix + property,
           props[property].description,
-          true
+          optional
         )
-        text += processProperties(props[property], true)
+        text += processProperties(props[property], prefix + property)
+      } else if (props[property].type === 'array' && props[property].items) {
+        let { items } = props[property]
+        // 如果是object 继续循环
+        if (items.type === 'object') {
+          text += writeParam(
+            'Object[]',
+            prefix + property,
+            props[property].description,
+            !required.includes(property)
+          )
+          text += processProperties(items, prefix + property)
+        } else {
+          /**
+           * 非object
+           * @todo 支持第三方类 upperFirst(property)
+           */
+          text += writeParam(
+            getType(props[property].items) + '[]',
+            prefix + property,
+            props[property].description,
+            optional
+          )
+        }
       } else {
-        let optional = !required.includes(property)
         let type = getType(props[property]) || upperFirst(property)
         text += writeParam(
           type,
@@ -62,7 +98,14 @@ function writeDescription(schema, suffix = 'object') {
   return `  * ${text}\n  *\n`
 }
 
-function writeParam(type = '', field, description = '', optional) {
+/**
+ *
+ * @param {*} type
+ * @param {*} field
+ * @param {*} description
+ * @param {boolean} optional
+ */
+function writeParam(type = '', field, description = '', optional = true) {
   const fieldTemplate = optional ? `[${field}]` : field
   return `  * @property {${type}} ${fieldTemplate} - ${description} \n`
 }

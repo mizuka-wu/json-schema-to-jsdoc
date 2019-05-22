@@ -9,9 +9,11 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "debounce": "^1.2.0",
     "element-ui": "^2.4.5",
     "json-pointer": "^0.6.0",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-codemirror": "^4.0.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0",
