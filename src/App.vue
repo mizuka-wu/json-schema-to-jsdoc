@@ -3,7 +3,6 @@
   <el-container id="app">
     <el-header>
       <h1>Json-Schema to jsdoc</h1>
-      <a href="https://github.com/mizuka-wu/json-schema-to-jsdoc">View on github</a>
     </el-header>
     <el-main>
       <el-row :gutter="32">
@@ -32,6 +31,9 @@
         </el-col>
       </el-row>
     </el-main>
+    <el-footer>
+      <a href="https://github.com/mizuka-wu/json-schema-to-jsdoc">View on github</a>
+    </el-footer>
   </el-container>
 </template>
 
@@ -78,7 +80,7 @@ export default {
       handler: debounce(function(text) {
         this.error = "";
         if (text && !text.includes("id")) {
-          this.error = "schema没有id字段，请手动补全jsdoc";
+          this.error = "schema has no id property";
         }
         localStorage.setItem("schema-body", text);
       }, 300)
