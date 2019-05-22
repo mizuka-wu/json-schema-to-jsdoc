@@ -3,6 +3,7 @@
   <el-container id="app">
     <el-header>
       <h1>Json-Schema to jsdoc</h1>
+      <a href="https://github.com/mizuka-wu/json-schema-to-jsdoc">View on github</a>
     </el-header>
     <el-main>
       <el-row :gutter="32">
