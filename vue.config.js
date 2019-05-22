@@ -1,6 +1,4 @@
 module.exports = {
   publicPath:
-    process.env.NODE_ENV === 'production'
-      ? '/my-project/'
-      : '/json-schema-to-jsdoc/'
+    process.env.NODE_ENV === 'production' ? '/json-schema-to-jsdoc/' : '/'
 }
